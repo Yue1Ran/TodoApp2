@@ -12,20 +12,23 @@ import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.todoapp.R
+import com.example.todoapp.databinding.FragmentEditTodoBinding
 import com.example.todoapp.model.Todo
 import com.example.todoapp.viewmodel.DetailTodoViewModel
 
 
 class EditTodoFragment : Fragment() {
     private lateinit var viewModel: DetailTodoViewModel
+    private lateinit var dataBinding:FragmentEditTodoBinding
     private var todo: Todo? =null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_todo, container, false)
+
+        dataBinding = FragmentEditTodoBinding.inflate(inflater,container,false)
+        return dataBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,23 +55,23 @@ class EditTodoFragment : Fragment() {
 
     fun observerViewModel(){
         viewModel.todoLD.observe(viewLifecycleOwner, Observer {
-
-            todo = it
-            val title = view?.findViewById<EditText>(R.id.txtTitle)
-            val desc = view?.findViewById<EditText>(R.id.txtNotes)
-            title?.setText(it.title)
-            desc?.setText(it.notes)
-
-            val radioLow = view?.findViewById<RadioButton>(R.id.radioLow)
-            val radioMed = view?.findViewById<RadioButton>(R.id.radioMedium)
-            val radioHi = view?.findViewById<RadioButton>(R.id.radioHigh)
-
-
-            when (it.priority) {
-                1 -> radioLow?.isChecked = true
-                2 -> radioMed?.isChecked = true
-                else -> radioHi?.isChecked = true
-            }
+            dataBinding.todo = it
+//            todo = it
+//            val title = view?.findViewById<EditText>(R.id.txtTitle)
+//            val desc = view?.findViewById<EditText>(R.id.txtNotes)
+//            title?.setText(it.title)
+//            desc?.setText(it.notes)
+//
+//            val radioLow = view?.findViewById<RadioButton>(R.id.radioLow)
+//            val radioMed = view?.findViewById<RadioButton>(R.id.radioMedium)
+//            val radioHi = view?.findViewById<RadioButton>(R.id.radioHigh)
+//
+//
+//            when (it.priority) {
+//                1 -> radioLow?.isChecked = true
+//                2 -> radioMed?.isChecked = true
+//                else -> radioHi?.isChecked = true
+//            }
 
         })
     }

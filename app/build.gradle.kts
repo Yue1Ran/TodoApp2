@@ -1,3 +1,4 @@
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -10,6 +11,9 @@ android {
     namespace = "com.example.todoapp"
     compileSdk = 34
 
+    buildFeatures{
+        dataBinding = true
+    }
     defaultConfig {
         applicationId = "com.example.todoapp"
         minSdk = 24
