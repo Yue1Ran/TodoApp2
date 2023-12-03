@@ -17,6 +17,7 @@ abstract class TodoDatabase:RoomDatabase() {
     companion object{
         //singleton implementation
 
+
         @Volatile private var instance:TodoDatabase ?=null
         private val LOCK = Any()
 

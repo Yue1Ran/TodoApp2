@@ -9,27 +9,21 @@ import androidx.room.Update
 
 @Dao
 interface TodoDao {
-    //varag dapat menerima banyak item bukan ARRAY namun data typenya sama
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg todo:Todo)
+    fun insertOrUpdate(vararg todo: Todo)
 
-    @Query("SELECT * FROM todo")
-    fun selectAllTodo(): List<Todo>
+    @Query("SELECT * FROM todo WHERE is_done = 0 ORDER BY priority DESC")
+    fun all(): List<Todo>
 
-    @Query("SELECT * FROM todo WHERE uuid= :id")
-    fun selectTodo(id:Int): Todo
+    @Query("SELECT * FROM todo WHERE uuid = :id")
+    fun find(id: Int): Todo
 
-//    @Query("UPDATE todo SET title=:title, notes=:notes, priority=:priority WHERE uuid = :id")
-//    suspend fun update(title:String, notes:String, priority:Int, id:Int)
-//
-//    @Query("SELECT * FROM todo ORDER BY priority DESC")
-//    //suspend fun selectAllTodo(): List<Todo>
-
-    //update
-    @Update
-    fun update (todo: Todo)
+    @Query("DELETE FROM todo")
+    fun deleteAll()
 
     @Delete
-    fun deleteTodo(todo:Todo)
+    fun delete(todo: Todo)
+
+    @Query("UPDATE todo SET is_done = 1 WHERE uuid = :id")
+    fun setDone(id: Int)
 }
